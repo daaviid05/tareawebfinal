@@ -1,0 +1,63 @@
+2. Branchs
+Para este ejercicio, se debe crear un archivo nombre_apellido.txt, dentro de la carpeta 2.branchs.
+
+En este archivo, se va a guardar las respuestas teóricas y algunos resultados de los mismos.
+
+Ejercicio 2
+2.1. Preguntas
+¿Qué es un branch?
+¿Por qué pueden ser útiles los branches?
+¿Cómo se crea una branch?
+¿Cómo se cambia a una branch?
+¿Cómo se elimina una branch?
+¿Cómo se crea una branch y se cambia a ella en un solo paso?
+¿Qué es un merge?
+¿Cómo se realiza un merge?
+¿Que es un tag?
+¿Cómo se crea un tag?
+2.2. Ejercicio Práctico
+Antes de continuar con el ejercicio, se debe agregar un alias para facilitar la visualización de los branches.
+
+git config --global alias.graph "log --all --graph --decorate --oneline"
+
+# Pruebe el comando
+git graph
+[] Crear una branch experimento. (Puede usar el comando git branch experimento master).
+Moverse a la branch experimento. (Puede usar el comando git checkout).
+Verificar que se encuentra en la branch ejercicio_2. (Puede usar el comando git branch).
+Agregarle el condimento albahaca arriba del queso al archivo 2.branchs/pizza.txt y "commitee" los cambios.
+Agregarle el condimento oregano arriba de la albahaca al archivo 2.branchs/pizza.txt y "commitee" los cambios.
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+Vuelva a la branch master.
+Crear una branch anana. (Puede usar el comando git checkout -b anana).
+Agregarle el condimento anana debajo del queso al archivo 2.branchs/pizza.txt y "commitee" los cambios.
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+Vuelva a la branch master.
+Agregue el condimento cebolla debajo de la salsa al archivo 2.branchs/pizza.txt y "commitee" los cambios.
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+Haga un merge de la branch anana a la branch master. (Puede usar el comando git merge anana).
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+¿Qué branches están "mergeadas" a master? (Puede usar el comando git branch --merged).
+Haga un merge de la branch experimento a la branch master. (Puede usar el comando git merge experimento).
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+¿Tuvo que hacer un merge manual, o git lo hizo automáticamente? ¿Por qué?
+¿Qué branches están "mergeadas" a master? (Puede usar el comando git branch --merged).
+Elimine la branch anana. (Puede usar el comando git branch -d anana).
+Elimine la branch experimento. (Puede usar el comando git branch -d experimento).
+¿Qué branches están "mergeadas" a master? (Puede usar el comando git branch --merged).
+Correr el comando git graph y observar el resultado. ¿Qué observa?
+Crear un tag pizza en el último commit. (Puede usar el comando git tag -a pizza -m "Receta de la pizza."").
+Ver los tags creados. (Puede usar el comando git tag).
+Ver el tag pizza. (Puede usar el comando git show pizza).
+Finalizado
+Una vez finalizado el ejercicio, recuerde guardar sus cambios en nombre_apellido.txt y subirlos a su repositorio remoto. Este archivo (README.md) y pizza.txt tienen que mantenerse sin ningún cambio.
+
+Para volver a sandwich.txt a su estado original, debe buscar el commit que lo contiene y correr el comando:
+
+git checkout [commit ID] -- 2.branchs/pizza.txt
+
+# ó
+
+git checkout [commit ID] -- pizza.txt
+
+# dependiendo de donde esté ubicado
