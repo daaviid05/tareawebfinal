@@ -1,0 +1,151 @@
+2.1. Preguntas
+
+1. ¿Qué es un branch?
+Un branch (rama) en Git es una línea independiente de desarrollo que permite trabajar en diferentes características, correcciones o experimentos, sin afectar la rama principal (por lo general llamada master o main).
+
+2. ¿Por qué pueden ser útiles los branches?
+Los branches permiten desarrollar nuevas funcionalidades, corregir errores o experimentar sin afectar el código principal. Así varios desarrolladores pueden trabajar simultáneamente en diferentes tareas y luego fusionar los cambios.
+
+3. ¿Cómo se crea una branch?
+Se crea con: 
+git branch nombre_rama
+
+4. ¿Cómo se cambia a una branch?
+Se usa:
+git checkout nombre_rama
+o, en versiones modernas,
+git switch nombre_rama
+
+5. ¿Cómo se elimina una branch?
+Se elimina con:
+git branch -d nombre_rama
+
+6. ¿Cómo se crea una branch y se cambia a ella en un solo paso?
+Con:
+git checkout -b nombre_rama
+o 
+git switch -c nombre_rama
+
+7. ¿Qué es un merge?
+Un merge es la acción de combinar los cambios de dos (o más) ramas en una sola.
+
+8. ¿Cómo se realiza un merge?
+Primero, se debe estar en la rama donde se desea aplicar los cambios y luego usar:
+git merge nombre_rama
+
+9. ¿Que es un tag?
+Un tag es una referencia que apunta a un commit específico. Se usa generalmente para marcar versiones importantes (por ejemplo, releases).
+
+10. ¿Cómo se crea un tag?
+Con:
+git tag -a nombre_tag -m "mensaje"
+o simplemente
+git tag nombre_tag
+
+---
+
+2.2. Ejercicio Práctico
+
+Alias para visualizar branches:
+git config --global alias.graph "log --all --graph --decorate --oneline"
+git graph
+
+1. Crear una branch experimento:
+git branch experimento
+
+2. Moverse a la branch experimento:
+git checkout experimento
+
+3. Verificar que se encuentra en la branch ejercicio_2:
+git branch
+(La salida muestra un asterisco '*' en la rama actual)
+
+4. Agregar el condimento albahaca arriba del queso en 2.branchs/pizza.txt y commitear:
+# Editar pizza.txt y guardar el cambio
+git add 2.branchs/pizza.txt
+git commit -m "Agregar albahaca arriba del queso"
+
+5. Agregar oregano arriba de la albahaca y commitear:
+# Editar pizza.txt y guardar el cambio
+git add 2.branchs/pizza.txt
+git commit -m "Agregar oregano arriba de la albahaca"
+
+6. git graph (observación):
+Se observa que la rama 'experimento' tiene dos commits nuevos respecto a master, mostrando ramas separadas en el grafo.
+
+7. Volver a master:
+git checkout master
+
+8. Crear branch anana:
+git checkout -b anana
+
+9. Agregar anana debajo del queso y commitear:
+# Editar pizza.txt y guardar el cambio
+git add 2.branchs/pizza.txt
+git commit -m "Agregar anana debajo del queso"
+
+10. git graph (observación):
+Se ve una rama 'anana' con un commit diferente a la rama 'experimento', ambas separadas de master.
+
+11. Volver a master:
+git checkout master
+
+12. Agregar cebolla debajo de la salsa y commitear:
+# Editar pizza.txt y guardar el cambio
+git add 2.branchs/pizza.txt
+git commit -m "Agregar cebolla debajo de la salsa"
+
+13. git graph (observación):
+master tiene un commit propio, aparte de los de 'anana' y 'experimento'.
+
+14. Merge de anana a master:
+git merge anana
+
+15. git graph (observación):
+Se observa un commit de merge en master que integra los cambios de la rama 'anana'.
+
+16. ¿Qué branches están "mergeadas" a master?
+git branch --merged
+# Respuesta: anana, master
+
+17. Merge de experimento a master:
+git merge experimento
+
+18. git graph (observación):
+Si hubo cambios en las mismas líneas, puede haber conflicto, sino, git hace el merge automáticamente. Se ve un commit de merge de experimento.
+
+19. ¿Merge manual o automático? ¿Por qué?
+Si no hubo conflicto, git lo hizo automáticamente porque los cambios no se superpusieron. Si hubo conflicto es necesario resolverlo manualmente.
+
+20. ¿Qué branches están "mergeadas" a master?
+git branch --merged
+# Respuesta: anana, experimento, master
+
+21. Eliminar branch anana:
+git branch -d anana
+
+22. Eliminar branch experimento:
+git branch -d experimento
+
+23. ¿Qué branches están "mergeadas" a master?
+git branch --merged
+# Respuesta: master
+
+24. git graph (observación):
+Se observa la historia de merges y que solo queda master.
+
+25. Crear un tag pizza en el último commit:
+git tag -a pizza -m "Receta de la pizza."
+
+26. Ver los tags creados:
+git tag
+
+27. Ver el tag pizza:
+git show pizza
+
+---
+
+Una vez finalizado, guardar los cambios en este archivo y subirlos al repositorio remoto.
+
+Para restaurar pizza.txt a su estado original:
+git checkout [commit ID] -- 2.branchs/pizza.txt
