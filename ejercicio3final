@@ -1,69 +1,103 @@
-### 3.1. Preguntas
+Aquí tienes el archivo “ejercicio3final” completamente editado, con explicaciones claras, resaltados y los ejercicios resueltos. Todo está explicado para que sea fácil de entender y visualmente llamativo:
 
-**¿Qué es un conflicto? ¿Cuándo ocurre? ¿Es bueno o malo?**
+ Ejercicio 3: Conflictos en Git
+ 3.1. Preguntas
 
-Un conflicto en Git es una situación que ocurre cuando dos o más ramas han realizado cambios en las mismas líneas de un archivo o en archivos que se solapan, y Git no puede decidir automáticamente cómo fusionar esos cambios. Los conflictos suelen ocurrir durante un merge (fusión) o un rebase. No es necesariamente algo “bueno” o “malo”: es una parte natural del trabajo colaborativo con control de versiones, pero si no se maneja bien puede complicar el flujo de trabajo.
+ ¿Qué es un conflicto? ¿Cuándo ocurre? ¿Es bueno o malo?
+Un conflicto** en Git es una situación que ocurre cuando **dos o más ramas han modificado las mismas líneas de un archivo** o archivos que se solapan, y **Git no puede decidir automáticamente qué versión conservar**.  
+- Los conflictos ocurren generalmente durante un **merge** o un rebase.  
+- No son ni “buenos” ni “malos”, sino una consecuencia natural del trabajo colaborativo. Sin embargo, **es importante resolverlos correctamente** para mantener la integridad del proyecto.
 
-**¿Se puede evitar un conflicto? ¿Cómo?**
 
-Algunos conflictos se pueden evitar manteniendo una comunicación constante con los colaboradores, actualizando frecuentemente la rama local con los cambios de la rama principal (por ejemplo, usando `git pull` o integrando cambios de `master` antes de trabajar), y tratando de no modificar las mismas líneas de código que otros desarrolladores. Sin embargo, en equipos grandes o proyectos activos, los conflictos son inevitables a largo plazo.
+¿Se puede evitar un conflicto? ¿Cómo?
+Algunos conflictos se pueden evitar si:
+- Hay buena comunicación** entre colaboradores.
+- Se actualiza frecuentemente la rama local con los cambios de la rama principal (git pull o git fetch seguido de `merge o rebase).
+- Se divide el trabajo en archivos o líneas diferentes para disminuir la posibilidad de solapamiento.
+- Se hacen **commits pequeños y frecuentes.
+
+
+
+ 3.2. Ejercicio Práctico
+
+A continuación, se muestran los pasos realizados y los comandos utilizados para provocar y resolver un conflicto en Git:
+
+1. Creé el archivo 3.conflicts/daaviid05.txt para registrar este ejercicio.
+
+2. Creé una rama llamada suprema a partir de master:
+   bash
+   git checkout master
+   git checkout -b suprema
+  
+
+3. Me moví a la rama suprema.
+
+4. En 3.conflicts/milanesa.txt` cambié la palabra lomo por pollo:
+   - Antes: lomo
+   - Después: pollo
+
+5. Realicé el commit con el mensaje "Cambio de lomo a pollo":
+   bash
+   git add 3.conflicts/milanesa.txt
+   git commit -m "Cambio de lomo a pollo"
+   
+
+6. Me moví a la rama `master` y creé una rama llamada bife:
+   bash
+   git checkout master
+   git checkout -b bife
+  
+
+7. Me moví a bife y cambié en el mismo archivo la palabra lomo por bife:
+   - Antes: lomo
+   - Después: bife
+   bash
+   git add 3.conflicts/milanesa.txt
+   git commit -m "Cambio de lomo a bife"
+   
+Resultados de los comandos:
+
+-git diff master suprema 
+  > La diferencia principal es que en la rama `suprema` la palabra lomo fue reemplazada por pollo.
+
+-git diff master bife 
+  > En la rama bife la palabra lomo fue reemplazada por bife.
+
+-git status desde master  
+  > No había cambios pendientes; el working tree estaba limpio.
+
+-git merge bife 
+  > La fusión se realizó correctamente porque master y bife no tenían cambios conflictivos en ese momento.
+
+-git merge suprema 
+  > Aquí ocurrió el conflicto porque tanto `bife` como `suprema` modificaron la **misma línea** en `3.conflicts/milanesa.txt` pero con valores distintos.
+
+-git status 
+  > Indicó que había un **conflicto de fusión** en `3.conflicts/milanesa.txt` y que debía resolverse manualmente.
+
+Contenido de 3.conflicts/milanesa.txt durante el conflicto:
+diff
+<<<<<<< HEAD
+bife
+pollo
+>>>>>>> suprema
+```
+Esto indica que hay que elegir entre **bife** y pollo, o combinar ambos cambios según lo que se quiera.
 
 ---
 
-### 3.2. Ejercicio Práctico
+-Aborté el merge con `git merge --abort 
+  > El repositorio volvió al estado anterior al intento de fusión.
 
-1. **Creé el archivo 3.conflicts/daaviid05.txt para registrar este ejercicio.**
-2. **Creé una branch llamada `suprema` a partir de `master`.**
-3. **Me moví a la branch `suprema`.**
-4. **En `3.conflicts/milanesa.txt` cambié la palabra `lomo` por `pollo`.**
-5. **Realicé el commit con el mensaje "Cambio de lomo a pollo".**
-6. **Me moví a la branch `master` y creé una branch llamada `bife`.**
-7. **Me moví a `bife` y cambié en el mismo archivo la palabra `lomo` por `bife`.**
-8. **Resultados de los comandos:**
-
-- `git diff master suprema`  
-  Observé que la diferencia principal es que en la rama `suprema` la palabra `lomo` fue reemplazada por `pollo`.
-
-- `git diff master bife`  
-  Observé que en la rama `bife` la palabra `lomo` fue reemplazada por `bife`.
-
-- `git status` desde `master`  
-  No había cambios pendientes; el working tree estaba limpio.
-
-- `git merge bife`  
-  La fusión se realizó correctamente porque `master` y `bife` no tenían cambios conflictivos (en este punto, `master` y `bife` solo difieren en el archivo editado, pero el merge es sencillo porque `bife` es descendiente de `master`).
-
-- `git merge suprema`  
-  Aquí ocurrió el conflicto porque tanto `bife` como `suprema` modificaron la misma línea en `3.conflicts/milanesa.txt` pero con valores distintos.
-
-- `git status`  
-  Indicó que había un conflicto de fusión en `3.conflicts/milanesa.txt` y que debía ser resuelto manualmente.
-
-- **Contenido de `3.conflicts/milanesa.txt` durante el conflicto:**  
-  El archivo muestra marcas de conflicto, por ejemplo:
-  ```
-  <<<<<<< HEAD
-  bife
-  =======
-  pollo
-  >>>>>>> suprema
-  ```
-  Esto indica que hay que elegir entre `bife` y `pollo` o combinar ambos cambios.
-
-- **Aborté el merge con `git merge --abort`**  
-  El repositorio volvió al estado anterior al intento de fusión.
-
-- **Volví a ejecutar `git merge suprema` y resolví el conflicto manualmente.**  
-  Edité el archivo para dejar la versión deseada, guardé los cambios, y finalicé la fusión con:
-  ```
+- Volví a ejecutar git merge suprema y resolví el conflicto manualmente: 
+  Edité el archivo para dejar la versión deseada (por ejemplo, “bife con pollo”), guardé los cambios y finalicé la fusión con:
+  bash
   git add 3.conflicts/milanesa.txt
   git commit
-  ```
 
----
-
-**Nota:**  
-Para restaurar `milanesa.txt` a su estado original, hay que buscar el commit original y ejecutar:
-```
+Nota final
+Para restaurar milanesa.txt a su estado original, busca el commit original y ejecuta:
+bash
 git checkout [commit ID] -- 3.conflicts/milanesa.txt
-```
+
+¿Necesitas que te explique algún paso con más detalle o que resuelva otro ejercicio?
